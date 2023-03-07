@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Web1",
+				"name": "Web1GitPublishtest",
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
