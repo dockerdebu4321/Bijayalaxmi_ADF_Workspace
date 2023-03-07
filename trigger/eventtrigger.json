@@ -1,0 +1,26 @@
+{
+	"name": "eventtrigger",
+	"properties": {
+		"description": "event trigger",
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CopyPipeline",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/adfdemo/blobs/input/",
+			"blobPathEndsWith": ".txt",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/e61a102b-eb05-4d8a-ad23-195b4e23d12b/resourceGroups/resourcegroupdemo/providers/Microsoft.Storage/storageAccounts/storageaccountdemogopi",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

@@ -1,0 +1,9 @@
+{
+	"name": "azuredatafactorydemogopi",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "cd268c4e-fd9c-4802-8626-15573e771dca",
+		"tenantId": "671c4597-776b-4c1c-a972-b00fd9e08325"
+	}
+}

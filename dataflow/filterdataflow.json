@@ -1,0 +1,50 @@
+{
+	"name": "filterdataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "employeedataset",
+						"type": "DatasetReference"
+					},
+					"name": "Employee"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "EmployeeandDeptdetails",
+						"type": "DatasetReference"
+					},
+					"name": "payrollemployeedata"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Filetrpayrolldept"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Eid as string,",
+				"          Ename as string,",
+				"          Gender as string,",
+				"          Salary as string,",
+				"          deptid as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Employee",
+				"Employee filter(equals(deptid,'3')) ~> Filetrpayrolldept",
+				"Filetrpayrolldept sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     partitionFileNames:['filterpayrollvalue'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> payrollemployeedata"
+			]
+		}
+	}
+}

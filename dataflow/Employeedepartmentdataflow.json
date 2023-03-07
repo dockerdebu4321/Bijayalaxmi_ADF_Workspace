@@ -1,0 +1,77 @@
+{
+	"name": "Employeedepartmentdataflow",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "employeedataset",
+						"type": "DatasetReference"
+					},
+					"name": "employeedata"
+				},
+				{
+					"dataset": {
+						"referenceName": "departmentdataset",
+						"type": "DatasetReference"
+					},
+					"name": "departmentdata"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "EmployeeandDeptdetails",
+						"type": "DatasetReference"
+					},
+					"name": "EmpjoinDept"
+				}
+			],
+			"transformations": [
+				{
+					"name": "join1"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Eid as string,",
+				"          Ename as string,",
+				"          Gender as string,",
+				"          Salary as string,",
+				"          deptid as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> employeedata",
+				"source(output(",
+				"          deptid as string,",
+				"          deptname as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> departmentdata",
+				"employeedata, departmentdata join(employeedata@deptid == departmentdata@deptid,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 derive(Eidname = concat(Eid,Ename)) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          Employeename = Eidname,",
+				"          Gender,",
+				"          Salary,",
+				"          departmentid = employeedata@deptid,",
+				"          deptname",
+				"     )) ~> EmpjoinDept"
+			]
+		}
+	}
+}
