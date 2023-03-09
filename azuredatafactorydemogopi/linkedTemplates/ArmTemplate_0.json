@@ -900,13 +900,13 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/empdeptdataflow')]",
+			"name": "[concat(parameters('factoryName'), '/dataflowranktransform')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "EmpDeptDetails",
+						"name": "Data flow1",
 						"type": "ExecuteDataFlow",
 						"dependsOn": [],
 						"policy": {
@@ -919,13 +919,12 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "Employeedepartmentdataflow",
+								"referenceName": "Ranktransformation",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
-									"employeedata": {},
-									"departmentdata": {},
-									"EmpjoinDept": {}
+									"source1": {},
+									"sink1": {}
 								}
 							},
 							"staging": {},
@@ -941,11 +940,10 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
-				"annotations": [],
-				"lastPublishTime": "2023-03-04T06:39:32Z"
+				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/Employeedepartmentdataflow')]"
+				"[concat(variables('factoryId'), '/dataflows/Ranktransformation')]"
 			]
 		}
 	]
